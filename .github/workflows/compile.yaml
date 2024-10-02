@@ -21,6 +21,9 @@ jobs:
       run: make pdf
     - name: Commit
       run: |
+        pwd
+        ls -la
+        ls -la .git
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add -f "out/*.pdf" "out/*.png"
