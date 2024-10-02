@@ -11,8 +11,8 @@ _Folien für den How-To-Studium Vortrag der Informatik ESE 2024 der Uni Ulm._
 </div>
 
 ## Mitwirken
-- Bei Feedback oder Fragen gerne ein neues Issue auf machen. 
-- Vor dem klonen des repos muss ``git lfs`` installiert sein. Zusätzlich sollte das repo mit ``--recurse-submodules`` geklont werden. 
+- Bei Feedback oder Fragen gerne ein neues Issue erstellen. 
+- Vor dem Klonen muss ``git lfs`` installiert sein. Zusätzlich sollte mit ``--recurse-submodules`` geklont werden. 
 
 ## Danksagungen
-- Danke an @EagleoutIce für fancyqr und fancybeamer 
+- Danke an [@EagleoutIce](https://github.com/EagleoutIce) für fancyqr und fancybeamer 
