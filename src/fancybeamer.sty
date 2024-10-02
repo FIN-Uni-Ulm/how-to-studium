@@ -1,0 +1,716 @@
+\AtEndPreamble{\usepackage{fancyuulm}} % use the uulm look and feel
+
+% =============================================
+% FANCY BEAMER
+% =============================================
+
+% ---------------------------------------------
+% import packages
+% ---------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage{xargs} % used to define/renew commands with multiple optional parameters
+\usepackage{color}
+\usepackage{fitbox} % used to auto-scale long frame titles
+\usepackage{tcolorbox} % used for color boxes (definition, example, note)
+\usepackage{ifthen}
+\usepackage{multicol} % for auto multi-column in content overview
+\usepackage{catchfile} % for automatic link on pictures
+
+% ---------------------------------------------
+% general settings
+% ---------------------------------------------
+\beamertemplatenavigationsymbolsempty % remove the default navigation symbols
+
+\newif\ifuniqueslidenumbersuffix
+\newif\ifsectiontitleslide % for enabling the automatic section title slide at the begin of each section
+\newif\ifsectionoverview % for enabling the automatic section overview on the section title slide
+\newif\ifdarkmode
+
+\DeclareOption{nosectionframes}{\sectiontitleslidefalse \sectionoverviewfalse}
+\DeclareOption{sectiontitleslides}{\sectiontitleslidetrue \sectionoverviewfalse}
+\DeclareOption{sectionoverviews}{\sectiontitleslidetrue \sectionoverviewtrue}
+\DeclareOption{uniqueslidenumber}{\uniqueslidenumbersuffixtrue}
+\DeclareOption{darkmode}{\darkmodetrue}
+
+\ExecuteOptions{sectiontitleslides} % use sectiontitleslides as default
+\mode<handout>{\ExecuteOptions{sectionoverviews}} % use sectionoverviews as default in handout mode
+
+\ProcessOptions
+
+\setlength{\parskip}{1.5ex} % set the parskip
+\newcommand{\@minipagerestore}{\setlength{\parskip}{1.5ex}} % use parskip also in minipages (also used for tcolorbox)
+
+% ---------------------------------------------
+% colors
+% ---------------------------------------------
+
+% colors that will not be adjusted in darkmode
+\definecolor{black}{HTML}{000000}
+\definecolor{white}{HTML}{FFFFFF}
+
+% colors that will be adjusted in darkmode
+\definecolor{red}{HTML}{BB3333}
+\definecolor{green}{HTML}{33BB33}
+\definecolor{blue}{HTML}{3333BB}
+\definecolor{orange}{HTML}{BB6600}
+\definecolor{accent}{HTML}{999999}
+\colorlet{accenttwo}{red}
+\colorlet{foreground}{black}
+\colorlet{background}{white}
+\colorlet{boxmix}{white}
+
+% beamer colors in darkmode
+\ifdarkmode
+\colorlet{red}{red!50!white}
+\colorlet{green}{green!50!white}
+\colorlet{blue}{blue!50!white}
+\colorlet{orange}{orange!50!white}
+\colorlet{foreground}{white!90!darkgray}
+\colorlet{background}{darkgray}
+\colorlet{boxmix}{darkgray}
+\colorlet{accent}{accent!25!darkgray}
+\colorlet{accenttwo}{accenttwo!25!darkgray}
+\fi
+
+% set beamer colors
+\setbeamercolor{background canvas}{bg=background}
+\setbeamercolor{frametitle}{fg=foreground}
+\setbeamercolor{structure}{fg=foreground}
+\setbeamercolor{normal text}{fg=foreground}
+\setbeamercolor*{palette primary}{use=structure,fg=structure.fg}
+\setbeamercolor*{palette secondary}{use=structure,fg=structure.fg!95!black}
+\setbeamercolor*{palette tertiary}{use=structure,fg=structure.fg!90!black}
+\setbeamercolor*{palette quaternary}{use=structure,fg=structure.fg!95!black,bg=black!80}
+\setbeamercolor{item}{fg=foreground}
+\setbeamercolor{itemize/enumerate body}{use=normal text,fg=normal text.fg}
+\setbeamercolor{itemize/enumerate subbody}{use=itemize/enumerate body,fg=itemize/enumerate body.fg}
+\setbeamercolor{itemize/enumerate subsubbody}{use=itemize/enumerate subbody,fg=itemize/enumerate subbody.fg}
+\setbeamercolor{logobox}{bg=white}
+\setbeamercolor{section in toc}{fg=foreground}
+\setbeamercolor{subsection in toc}{fg=foreground}
+
+\setbeamercolor{myfooter}{fg=white,bg=accent}
+\setbeamercolor{mypagenumber}{fg=white,bg=accenttwo}
+\setbeamercolor{titlebox}{fg=white,bg=accenttwo}
+\setbeamercolor{subtitlebox}{fg=white,bg=accent}
+
+% ---------------------------------------------
+% fonts
+% ---------------------------------------------
+\setbeamerfont{frametitle}{size=\LARGE, series=\bfseries}
+\setbeamerfont{section title}{size=\Huge, series=\bfseries}
+\setbeamerfont{section in toc}{size=\large, series=\bfseries}
+
+\setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\normalsize}
+
+% ---------------------------------------------
+% list environments
+% ---------------------------------------------
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate item}{\arabic{enumi}.}
+\setbeamertemplate{enumerate subitem}{\arabic{enumii}.}
+\setbeamertemplate{enumerate subsubitem}{\arabic{enumiii}.}
+\setbeamertemplate{section in toc}[sections numbered]
+
+% ---------------------------------------------
+% frame layout
+% ---------------------------------------------
+
+% we use this flag as a helper to toggle extra behavior when constructing the logos
+\newif\iffancy@logos@first@
+
+% [options for includegraphics, shared for all figures]{logonameA, logonameB, ...}
+\def\fancy@logoline{}
+\newcommand*\fancylogos[2][]{\def\fancy@logoline{%
+    \fancy@logos@first@true
+    % we iterate over all images given in the comma-separated list
+    \@for\@image:={#2}\do{%
+        \iffancy@logos@first@\fancy@logos@first@false\else\hskip0pt plus 1filll\fi
+        \ifthenelse{\equal{\@image}{}}{}{%
+            \pic[height=4.5ex,#1]{\@image}%
+        }%
+    }%
+}}
+
+\def\fancy@titlepage@margin{20pt}
+\newcommand{\@createtitleslide}{
+    {
+    \ifx \fancytitlepicture \empty \else \usebackgroundtemplate{\pic[trim=0 0 0 \fancytitlepictureoffset,clip,width=\paperwidth]{\fancytitlepicture}} \fi
+    \begin{frame}[plain]
+        \vskip0pt plus 1filll
+        \begin{beamercolorbox}[wd=\paperwidth,ht=4.5ex,dp=2ex,right]{titlebox}
+            \LARGE\textbf{\inserttitle}\hspace*{20pt}
+        \end{beamercolorbox}%
+        \nointerlineskip%
+        \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,right,rightskip=\fancy@titlepage@margin]{subtitlebox}
+            \small
+            \ifx \insertsubtitle \empty \else \insertsubtitle\ $\vert$ \fi
+            \makeatletter
+            \ifx \beamer@shortauthor \empty \else \insertauthor\ $\vert$ \fi
+            \makeatother
+            \ifx \insertdate \empty \else \insertdate \fi
+        \end{beamercolorbox}%
+        \nointerlineskip
+    \end{frame}
+    }
+}
+
+\renewcommandx{\maketitle}[2][1=apr21-o25a,2=0]{
+    \gdef\fancytitlepicture{#1}
+    \gdef\fancytitlepictureoffset{#2}
+    \@createtitleslide
+}
+
+\newcommand{\againtitle}{
+    \ifcsname fancytitlepicture\endcsname
+        \@createtitleslide
+    \else
+        \PackageError{fancybeamer}{To use \string\againtitle\space you must first use \string\maketitle!}{Either comment out this line or check if you forgot to issue the \string\maketitle-macro.}%
+    \fi
+}
+
+\setbeamertemplate{frametitle}{
+    \vspace{20pt}%
+    \vphantom{/}\setbox0=\hbox{\insertframetitle}%
+    \ifdim\wd0<\textwidth
+    \insertframetitle
+    \else\let\hfill\space\resizebox\linewidth!{\insertframetitle}\fi
+}
+\ifuniqueslidenumbersuffix
+    \def\fancy@page{\insertframenumber\ifnum\insertframestartpage=\insertframeendpage\else\rlap{\color{fg!50!bg}.\insertslidenumber}\fi}
+\else
+    \def\fancy@page{\insertframenumber}
+\fi
+\setbeamertemplate{footline}{
+    \hypersetup{linkcolor = white}
+    \hbox{%
+        \begin{beamercolorbox}[wd=0.93\textwidth,ht=3mm,dp=1.5mm,left]{myfooter}
+            \hspace{0.03\textwidth}
+            \insertshortauthor
+            \hfill
+            \insertshorttitle\
+            \ifx \insertsubtitle \empty \else {-- \insertshortsubtitle} \fi
+            \ifx \insertsectionhead \empty \else {-- \thesection.~\insertsectionhead} \fi
+            \hspace{0.03\textwidth}
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=0.07\textwidth,ht=3mm,dp=1.5mm,center]{mypagenumber}
+            \usebeamerfont{page number in head/foot}%
+            \fancy@page
+        \end{beamercolorbox}%
+    }%
+}
+
+% ---------------------------------------------
+% table of contents
+% ---------------------------------------------
+\ifsectiontitleslide
+\AtBeginSection{
+    \ifsectionoverview
+    \begin{frame}{\thesection.~\insertsection}
+        \linespread{.5}
+        \vfill
+        \tableofcontents[currentsection,hideothersubsections]
+    \end{frame}
+    \else
+    \begin{frame}
+        \usebeamerfont{section title}\textbf{\thesection.~\insertsection}
+    \end{frame}
+    \fi
+}
+\fi
+
+\newcommand{\contentoverview}[1][1]{
+    \begin{frame}{\inserttitle}
+        \linespread{.5}
+        \vfill
+        \ifthenelse{#1>1}{ % use multiple columns if more than one column is specified
+            \begin{multicols}{#1}
+                \tableofcontents
+            \end{multicols}
+        }{
+            \tableofcontents
+        }
+
+    \end{frame}
+}
+
+% ---------------------------------------------
+% handling lectures
+% ---------------------------------------------
+\AtBeginLecture{
+    \part{}
+    \subtitle{\thelecture.~\insertlecture}
+    \beamer@tocsectionnumber=0\relax
+    \setcounter{section}{0}
+	\setcounter{framenumber}{0}
+}
+
+% ---------------------------------------------
+% content layout
+% ---------------------------------------------
+\newcommand{\halfpage}[1]{\partofpage{48}{#1}}
+
+\newcommand{\thirdpage}[1]{\partofpage{31}{#1}}
+
+\usepackage{adjustbox}
+\newcommand{\partofpage}[2]{
+	\begin{minipage}{0.#1\textwidth}
+			\begin{flushleft}
+				#2
+			\end{flushleft}
+	\end{minipage}
+}
+
+% corresponds to '\halfpage', however, with the new columns we could use larger values
+% (same for thirdnext)
+\def\halfnext{.489\textwidth}
+% corresponds to '\thirdpage'
+\def\thirdnext{.31\textwidth}
+
+\newcommand\leftandright[2]{%
+    \halfpage{#1}%
+    \hfill
+    \halfpage{#2}%
+}
+
+\newcommand\leftmiddleandright[3]{%
+    \thirdpage{#1}%
+    \hfill
+    \thirdpage{#2}%
+    \hfill
+    \thirdpage{#3}%
+}
+
+\newcommand\leftthenright[2]{%
+    \halfpage{#1}%
+    \hfill
+    \onslide<2->{\halfpage{#2}}%
+}
+
+\newcommand\rightthenleft[2]{
+    \onslide<2->{\halfpage{#1}}
+    \hfill
+    \halfpage{#2}
+}
+
+\newcommand\leftmiddlethenright[3]{%
+    \thirdpage{#1}%
+    \hfill
+    \onslide<2->{\thirdpage{#2}}%
+    \hfill
+    \onslide<3->{\thirdpage{#3}}%
+}
+
+\newcommand\rightmiddlethenleft[3]{%
+    \onslide<3->{\thirdpage{#1}}%
+    \hfill
+    \onslide<2->{\thirdpage{#2}}%
+    \hfill
+    \thirdpage{#3}%
+}
+
+\newif\ifrecording % for enabling or disabling recording mode
+
+\newcommand\leftorright[2]{% only works in recording mode
+\ifrecording
+    \onslide<1>{\halfpage{#1}}%
+    \onslide<2>{\hfill}%
+    \onslide<3>{\halfpage{#2}}%
+\else
+    \leftthenright{#1}{#2}%
+\fi
+}
+
+\newcommand\rightorleft[2]{% only works in recording mode
+\ifrecording
+    \onslide<3>{\halfpage{#1}}%
+    \onslide<2>{\hfill}%
+    \onslide<1>{\halfpage{#2}}%
+\else
+    \rightthenleft{#1}{#2}%
+\fi
+}
+
+\newcommand\leftmiddleorright[3]{% only works in recording mode
+\ifrecording
+    \onslide<1>{\thirdpage{#1}}%
+    \onslide<2>{\hfill}%
+    \onslide<3>{\thirdpage{#2}}%
+    \onslide<4>{\hfill}%
+    \onslide<5>{\thirdpage{#3}}%
+\else
+    \leftmiddlethenright{#1}{#2}{#3}%
+\fi
+}
+
+\newcommand\rightmiddleorleft[3]{% only works in recording mode
+\ifrecording
+    \onslide<5>{\thirdpage{#1}}%
+    \onslide<4>{\hfill}%
+    \onslide<3>{\thirdpage{#2}}%
+    \onslide<2>{\hfill}%
+    \onslide<1>{\thirdpage{#3}}%
+\else
+    \rightmiddlethenleft{#1}{#2}{#3}%
+\fi
+}
+
+% here, we configure the defaults
+\def\fancy@cols@extra{} % no extra options for the columns environment
+% init | step
+\def\fancy@cols@animation#1#2{%
+    % defines the increment for each step (always positive)
+    % you can supply a step greater than 0, allowing for 'empty-animations' between the columns
+    \def\fancy@cols@anim@step{#1}%
+    % '-' for keep, '' (empty) for forget
+    \def\fancy@cols@anim@suff{#2}%
+}
+\def\fancy@cols@anim@init{1}     % start on the first column
+\def\fancy@cols@anim@step@sign{+}% count up (if there is anything to count)
+\newdimen\fancy@cols@total@width % holds the column width
+\newdimen\fancy@cols@height      % holds the target height of the columns environment (negative for auto)
+
+\def\fancy@cols@widths@max{100}  % the maximum number to be used for widths
+% with this, we define the keys that are usable within the optional argument of '\fancycolumns'
+
+\def\@fancy@animation@none{\fancy@cols@animation{0}{-}}
+\def\@fancy@animation@keep{\fancy@cols@animation{1}{-}}
+\def\@fancy@animation@forget{\fancy@cols@animation{1}{}}
+
+
+\pgfqkeys{/fancy columns}{
+  % search also allows to write 'c' instead of 'align/c' etc.
+  /fancy columns/.search also = {/fancy columns/align},
+  align/c/.code              = \def\fancy@cols@valign{c}, % centered
+  align/t/.code              = \def\fancy@cols@valign{t}, % top (baseline)
+  align/b/.code              = \def\fancy@cols@valign{b}, % bottom (baseline)
+  align/T/.code              = \def\fancy@cols@valign{T}, % top (with height, that is, aligns to the "very-top")
+  % with 'width' the user can set the total width to be occupied by the columns
+  width/.code                = \def\fancy@cols@target@width{#1},
+  % allows to define a preset height (in case of overflowing/changing heights on animations etc.)
+  height/.code               = \setlength\fancy@cols@height{#1},
+  no height/.style           = { height = -1pt },
+  % define the margin between columns
+  margin/.code               = \def\fancy@cols@margin{#1},
+  % widths={30,20} will give the first column 30%, the next 20%, and the rest (if any) an even share of the remaining 50%
+  widths/.code               = \def\fancy@cols@widths{#1},
+  % this key is only for users who need to change anything for the underlying columns mechanism
+  extra/columns/.code        = \def\fancy@cols@extra{#1},
+  % control the number of columns
+  columns/.code              = \def\fancy@cols@count{#1},
+  % allow for 'animation=...'
+  animation/.code            = {%
+    \expandafter\ifcsname @fancy@animation@#1\endcsname
+        \csname @fancy@animation@#1\endcsname
+    \else
+        \PackageError{fancybeamer}{The animation '#1' does not exist! Choose either 'keep', 'forget', or 'none'.}%
+    \fi
+  },
+  % comfort variants, just so the user does not have to write 'animation='
+  keep/.style                = {animation=keep},
+  forget/.style              = {animation=forget},
+  % deliberately not offer a comfort-variant for the default (none)
+  % reverse animation order by setting the initial animation to the amount of columns and making the step (animation delta
+  % per column) negative (\fancy@cols@anim@step@sign controls if the animation goes up (+) or down (-))
+  reverse/.code              =  \def\fancy@cols@anim@init{\fancy@cols@count}\def\fancy@cols@anim@step@sign{-},
+  % by overwriting the style '/fancy columns/@defaults',
+  % the user can change these defaults
+  @defaults/.style           = {%
+    c, % center align
+    no height,
+    columns = 2, animation=none, % one column, no animation
+    widths = {}, % use default widths (evenly distribute)
+    width = \linewidth, %
+    % this number was merely chosen to look visually pleasing
+    % we could also use the default columnsep of latx,
+    margin = 0.035\linewidth
+  }
+}
+
+% allows to user to overwrite the defaults
+\newcommand\setfancycolumnsdefault[1]{\pgfqkeys{/fancy columns}{@defaults/.append style={#1}}}
+
+% we need two counters
+% 'fancy@cols@current' holds the column we are currently in (starts with 0)
+\newcounter{fancy@cols@current}
+% 'fancy@cols@currentanim' holds the slide the current column should appear on
+\newcounter{fancy@cols@currentanim}
+% 'fancy@cols@current' will increment by 1 for each column
+% 'fancy@cols@currentanim' may increment similarly (animation without reverse)
+% ...                     may decrement by 1      (animation with reverse)
+% ...                     may remain constant     (without animation)
+
+% code to be executed at the start of the columns
+\newcommand\fancy@cols@init{%
+    % reset the counter for the current column
+    \setcounter{fancy@cols@current}{0}%
+    % initialize the current animation counter with the start animation
+    % this is 1 without reverse, and the number of columns if reverse is active
+    \setcounter{fancy@cols@currentanim}{\fancy@cols@anim@init}%
+    % due to the way beamer calculates the columns, we remove the margin from the width
+    % see etoolbox for an explanation of '\dimdef' (basically allows for calculations with dimensions)
+    \dimdef{\fancy@cols@total@width}{\linewidth-\fancy@cols@margin*\fancy@cols@count+\fancy@cols@margin}%
+    % activate(/overwrite) the '\nextcolumn' macro within the environment
+    \let\nextcolumn\fancy@nextcolumn
+    % a rather complicated macro, which sets/calculates the widths for all columns
+    \fancy@cols@initialize@widths
+    % issue the first column
+    % NOTE: we don't guard if 'columns' is below 1 (e.g. we always assume, there is 1 column)
+    \nextcolumn
+}
+
+% a temporary counter so we do not need to use low-level tex counters (like @tempcnta)
+% with '\value{fancy@cols@temp}' we get the numerical value of the counter
+% with '\arabic{fancy@cols@temp}' we get the (textual) "number"-value of the counter
+\newcounter{fancy@cols@temp}
+
+% the only thing important by this macro are other commands sequences:
+% \fancy@cols@col@0, \fancy@cols@col@1, \fancy@cols@col@2, ...
+% which hold the total width, column with number 0, 1, 2, ... should occupy
+% it uses the total number of columns, the supplied total width of all columns
+% and the desired 'widths={...}'. If there are more columns (e.g. widths={30}, columns=3)
+% it will automatically distributed the remaining space evenly.
+% note, that while we assume the units of 'widths' to be percentages, it is really the
+% macro '\fancy@cols@widths@max' which holds the number they should sum up to (i.e. 100)
+\newcommand\fancy@cols@initialize@widths{%
+    % first of all, we iterate over the given 'widths={...}' (stored within \fancy@cols@widths)
+    % we use 'fancy@cols@temp' to count the number of widths supplied
+    \setcounter{fancy@cols@temp}{0}%
+    % The macro '\fancy@cols@widths@max' holds the desired target which all the supplied widths should sum up to it is
+    % probably 100 (therefore, supplying widths={20,10}, would reduce '\fancy@cols@remaining@width' from 100 to 70)
+    \let\fancy@cols@remaining@width\fancy@cols@widths@max
+    % now we use '@for' which iterates over all widths (comma-separated) stored in '\fancy@cols@widths'
+    % the loop variable '\@fancy@cols@width' will hold the current width in each loop
+    \@for\@fancy@cols@width:=\fancy@cols@widths\do{%
+        % with 'protected@csedef' we (in short) define a new macro but supply its name in terms of another macro
+        % this macro name can contain numbers etc.
+        % essential, we define '\fancy@cols@col@<current column>' that is, 'widths={20,30}' would create:
+        % \fancy@cols@col@0, which holds the calculated value for 20
+        % \fancy@cols@col@1, which holds the calculated value for 20
+        % See the etoolbox package for an explanation of '\csdimdef'
+        \csdimdef{fancy@cols@col@\arabic{fancy@cols@temp}}{%
+            % We make math on dimensions. Essentially, we calculate the total width to be occupied
+            % by those column (i.e. translating from the percentages of 'widths' to the real dimension)
+            \fancy@cols@total@width*\@fancy@cols@width/\fancy@cols@widths@max
+            % Example:
+            % with '\fancy@cols@total@width' being probably something like '\linewidth' and '\fancy@cols@widths@max' being 100
+            % this can be read as: '\linewidth * \@fancy@cols@width/100'
+            % Suppose, the current '\@fancy@cols@width' is 20, this would result in '\linewidth * 0.2' or "20% of the width of the line"
+        }%
+        % now we update the amount of widths left (e.g., when we have '\fancy@cols@remaining@width' as 100 and a '\@fancy@cols@width' of 20,
+        % this will reduce the remaining number to 80). See etoolbox for an explanation of numdef
+        \numdef\fancy@cols@remaining@width{\fancy@cols@remaining@width-\@fancy@cols@width}%
+        % step the counter to move to the width for the next column
+        \stepcounter{fancy@cols@temp}%
+        % check, if we have too many columns
+        \ifnum\value{fancy@cols@temp}>\fancy@cols@count\relax
+            \PackageWarning{fancybeamer}{You specified '\fancy@cols@count' columns, but supplied more lengths to widths (\fancy@cols@widths) (page: \thepage, frame: \insertframenumber,\on@line). Reduce the amount of widths supplied or increase the number of columns}%
+        \fi
+    }%
+    % after processing all 'widths={...}' we check, if the user supplied (in sum) more than we have 'e.g., when having percentages (with 100)
+    % supplying 'widths={90,20}' would issue this error as we now have a '110%' column
+    \ifnum\fancy@cols@remaining@width<0\relax
+        \PackageWarning{fancybeamer}{Widths (\fancy@cols@widths) sum up to more than the allowed max '\fancy@cols@widths@max' (page: \thepage, frame: \insertframenumber,\on@line). Please update the supplied widths.}%
+    \fi
+    % for the remaining columns, distribute remaining width evenly
+    % if the user supplied 'columns=5' (stored in \fancy@cols@count) and 'widths={15,30}',
+    % this will set '\@fancy@cols@remaining@cols' to 3.
+    \edef\@fancy@cols@remaining@cols{\the\numexpr\fancy@cols@count-\value{fancy@cols@temp}}%
+    % NOTE: maybe we should notify the user of the even distribution?
+    % we only do something, if there is at least one column that the user supplied no width
+    \ifnum\@fancy@cols@remaining@cols>0
+        % we distribute the width evenly. therefore we calculate the width that remains for each column
+        % if there are 60%, and 3 columns remaining, we give each '\fancy@cols@total@width * 0.2' or 20%
+        % of the total column width.
+        \dimdef\@fancy@cols@remaining@colwidth{%
+            \fancy@cols@total@width*%
+                % this part of the expression basically calculates the percentage (20%...)
+                \fancy@cols@remaining@width/\fancy@cols@widths@max/\@fancy@cols@remaining@cols%
+        }%
+        % now, we use a while loop to iterate over the remaining columns
+        \@whilenum\value{fancy@cols@temp}<\fancy@cols@count\do{% 'while(i < #columns) { ... }
+            % we define the '\fancy@cols@col@<current column>'
+            % macros holding the width. With 60%, a total width of '\linewidth'
+            % and three out of 5 columns remaining, this would define:
+            % \fancy@cols@col@2, which holds \linewidth*0.2
+            % \fancy@cols@col@3, which holds \linewidth*0.2
+            % \fancy@cols@col@4, which holds \linewidth*0.2
+            \csedef{fancy@cols@col@\arabic{fancy@cols@temp}}{\@fancy@cols@remaining@colwidth}%
+            % increment the counter
+            \stepcounter{fancy@cols@temp}% i += 1
+        }%
+    \fi
+}
+
+% this is the macro, that will become '\nextcolumn' within the 'fancycolumns' environment
+\newcommand\fancy@nextcolumn{%
+    % issue a warning if too many columns
+    \ifnum\value{fancy@cols@current}<\fancy@cols@count\else
+        % this mus be an error, we calculate widths etc. only for the given columns
+        \PackageError{fancybeamer}{You configured 'columns=\fancy@cols@count', but supplied more (at least \arabic{fancy@cols@current}, page: \thepage, frame: \insertframenumber,\on@line)}{Either remove the command, or choose another Layout}%
+    \fi
+    % this is a debug statement, that can be used to se the current state within the animation
+    % \typeout{Creating col: \the\c@fancy@cols@current\space on slide: \the\c@fancy@cols@currentanim\fancy@cols@anim@suff, page: \thepage\space (width: \csuse{fancy@cols@col@\number\c@fancy@cols@current})}%
+    % now we issue the beamer '\column' command. In order to expand all arguments we first
+    % regarding the width, we use the macro 'fancy@cols@col@\number\c@fancy@cols@current'
+    % do a 'edef' (expanded definition, with LaTeX protection mechanism):
+    \protected@edef\@fancy@cols@tmp{\noexpand%
+        % with '<...>' we define the animation of this column
+        % counter 'fancy@cols@currentanim' holds the slide, this column should appear on
+        % '\fancy@cols@anim@suff' is either '-' (with animation=keep)
+        % or empty (with animation=forget)
+        % with 'animation=keep' (without reverse) this would be
+        % '\column<1->' for the first, '\column<2->' for the second, ...
+        \column<\arabic{fancy@cols@currentanim}\fancy@cols@anim@suff>{%
+            % the width of the column. For this, we use the 'fancy@cols@col@0', 'fancy@cols@col@1', ... macros
+            % defined by '\fancy@cols@initialize@widths'
+            \csuse{fancy@cols@col@\arabic{fancy@cols@current}}%
+        }%
+    }%
+    % basically execute the expanded macro (e.g. insert the column)
+    \@fancy@cols@tmp
+    % update the current animation accordingly (with reverse '\fancy@cols@anim@step@sign' will be '-',
+    % without it will be '+') the step '\fancy@cols@anim@step' is 0 for animation=none and probably 1 otherwise.
+    % therefore, using 'animation=keep' without reverse, would increment the counter by '+1' (a positive 1)
+    \addtocounter{fancy@cols@currentanim}{\fancy@cols@anim@step@sign\fancy@cols@anim@step}%
+    % increase the current column counter (e.g. for error checking, and for getting the correct width)
+    \stepcounter{fancy@cols@current}%
+    \ignorespaces
+}
+
+% #1: arguments like 'columns=3, keep, reverse'
+\newenvironment{fancycolumns}[1][]{\begingroup
+\pgfqkeys{/fancy columns}{@defaults, #1}%
+\edef\fancy@previous@fancy@cols{\thefancy@cols@current}% store the current column counter
+\ifdim\fancy@cols@height<0pt\begin{minipage}{\fancy@cols@target@width}\else\begin{minipage}[\fancy@cols@valign][\fancy@cols@height]{\fancy@cols@target@width}\fi%
+\begin{columns}[onlytextwidth,\fancy@cols@valign, \fancy@cols@extra]
+    \fancy@cols@init
+}{\end{columns}\end{minipage}\setcounter{fancy@cols@current}{\fancy@previous@fancy@cols}\endgroup}
+
+% ---------------------------------------------
+% color boxes
+% ---------------------------------------------
+\tcbset{%
+    % by definig styles, we avoid their replication
+    % #1: extra arguments, #2: title, #3: color of the frame, #4: padding, #5 boxname
+    fancy@basic-boxstyle/.style n args=5{
+        title={#2},
+        colframe=#3!30!boxmix,
+        coltitle=foreground,coltext=foreground,
+        before title={\setlength{\parskip}{0ex}\vphantom{/}\let\boxnumber\thetcbcounter\csname fancy@box@#5@titleprefix\endcsname},
+        after title={\let\boxnumber\thetcbcounter\csname fancy@box@#5@titlesuffix\endcsname},
+        before upper={\parskip\z@\relax},
+        fonttitle=\bfseries,
+        left=#4, right=#4, top=#4, bottom=#4, bottomtitle=-.5mm,
+        #1
+    },
+    % style definition for the normal boxes
+    % #1: extra arguments, #2: title, #3: color of the frame and background, #4: boxname
+    fancy@boxstyle/.style n args=4{fancy@basic-boxstyle={colback=#3!10!background,#1}{#2}{#3}{1mm}{#4}},
+    % style definition for their tight variant
+    % #1: extra arguments, #2: title, #3: color of the frame, #4: boxname
+    fancy@tightboxstyle/.style n args=4{fancy@basic-boxstyle={colback=background,#1}{#2}{#3}{0mm}{#4}}
+}
+
+% [optional prefix] | name | color | [optional suffix]
+\newcommandx\fancy@MakeNewBox[4][1={},4={}]{%
+    % in the definition #2 and #3 refer to the arguments of \fancy@MakeNewBox
+    % while ##1 and ##2 to refer to the arguments passed on to the new tcolorbox.
+    % therefore, with '\fancy@MakeNewBox{definition}{orange}', we create a new tcolorbox
+    % named 'definition' which wenn called with '\begin{definition}[top=10mm]{My title}...'
+    % will result in the option list 'fancy@boxstyle={top=10mm}{My title}{orange}'
+    % first we assure, that we can build this box
+    \newtcolorbox[auto counter,reset counter on overlays]{#2}[2][]{fancy@boxstyle={##1}{##2}{fancy@box@#2}{#2}}
+    % here, we re-create the old macros (e.g. '\mydefinition')
+    % 'capture=minipage' ensures their behavior is similar to the previous one (the default for
+    % tcbox would be hbox and no longer fill the width)
+    \expandafter\newtcbox\csname my#2\endcsname[2][]{capture=minipage,fancy@boxstyle={##1}{##2}{fancy@box@#2}{#2}}%
+    % now, we do the same for the tight-version of the boxes
+    \newtcolorbox[use counter from=#2]{#2tight}[2][]{fancy@tightboxstyle={##1}{##2}{fancy@box@#2}{#2}}%
+    \expandafter\newtcbox\csname my#2tight\endcsname[2][]{capture=minipage,fancy@tightboxstyle={##1}{##2}{fancy@box@#2}{#2}}%
+    % now, get the macros in effect:
+    \fancy@UpdateBoxSurround{#2}{#1}{#4}%
+    \fancy@UpdateBoxColor{#2}{#3}%
+}
+% like newBox but does not care if the box does already exist
+% [optional prefix] | name | color | [optional suffix]
+\newcommandx\fancy@DeclareBox[4][1={},4={}]{\csundef{#2}\csundef{end#2}\csundef{my#2}\csundef{#2tight}\csundef{end#2tight}\csundef{my#2tight}%
+\fancy@MakeNewBox[#1]{#2}{#3}[#4]}
+
+
+% name | prefix | suffix
+\def\fancy@UpdateBoxSurround#1#2#3{%
+\ifcsname #1\endcsname
+    \expandafter\def\csname fancy@box@#1@titleprefix\endcsname{#2}%
+    \expandafter\def\csname fancy@box@#1@titlesuffix\endcsname{#3}%
+\else
+    \PackageError{fancybeamer}{You can not set a box-prefix/-suffix for '#1' because there is no such box!}%
+\fi}
+
+\def\fancy@UpdateBoxPrefix#1#2{%
+\ifcsname #1\endcsname
+    \expandafter\def\csname fancy@box@#1@titleprefix\endcsname{#2}%
+\else
+    \PackageError{fancybeamer}{You can not set a box-prefix for '#1' because there is no such box!}%
+\fi}
+
+\def\fancy@UpdateBoxSuffix#1#2{%
+\ifcsname #1\endcsname
+    \expandafter\def\csname fancy@box@#1@titlesuffix\endcsname{#2}%
+\else
+    \PackageError{fancybeamer}{You can not set a box-suffix for '#1' because there is no such box!}%
+\fi}
+
+
+\def\fancy@UpdateBoxColor#1#2{%
+\ifcsname #1\endcsname
+    \colorlet{fancy@box@#1}{#2}%
+\else
+    \PackageError{fancybeamer}{You can not change the color for '#1' to '#2' because there is no such box!}
+\fi}
+
+\let\MakeNewBox\fancy@MakeNewBox
+\let\DeclareBox\fancy@DeclareBox
+\let\UpdateBoxColor\fancy@UpdateBoxColor
+\let\UpdateBoxPrefix\fancy@UpdateBoxPrefix
+\let\UpdateBoxSuffix\fancy@UpdateBoxSuffix
+\let\UpdateBoxSurround\fancy@UpdateBoxSurround
+
+% now we simply define the boxes by name and color
+% => \mydefinition and \mydefinitiontight
+% furthermore defines the environment \begin{definition}{<title>} ... \end{definition}
+\fancy@DeclareBox{definition}{orange}
+% => \myexample and \myexampletight
+% furthermore defines the environment \begin{example}{<title>} ... \end{example}
+\fancy@DeclareBox{example}{blue}
+% => \mynote and \mynotetight
+% furthermore defines the environment \begin{note}{<title>} ... \end{note}
+\fancy@DeclareBox{note}{red}
+
+% ---------------------------------------------
+% Pictures
+% ---------------------------------------------
+% GRAPHICSPATH
+\makeatletter
+\newcommand{\setpaths}[1]{
+	\appto\Ginput@path{#1} % for loading pictures
+	\def\input@path{#1} % for loading picture sources
+}
+\makeatother
+
+% adding links from text file to pictures automatically
+\newcommand\hreffile[1]{%
+	\CatchFileDef\myurl{#1}{\catcode`\#=12\catcode`\%=12\endlinechar=-1}%
+	\expandafter\href\expandafter{\myurl}}
+\newcommand{\pic}[2][]{%
+    \IfFileExists{#2.txt}{\hreffile{#2.txt}}{}{\adjincludegraphics[#1]{#2}}
+}
+\newcommand{\picDark}[2][]{\pic[#1]{#2}}
+\ifdarkmode
+	\renewcommand{\picDark}[2][]{%
+		\IfFileExists{#2-dark.png}{\pic[#1]{#2-dark.png}}{%
+		\IfFileExists{#2-dark.pdf}{\pic[#1]{#2-dark.pdf}}{%
+		\pic[#1,decodearray={1 .25 1 .25 1 .25}]{#2}}}%
+	}
+\fi

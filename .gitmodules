@@ -1,0 +1,3 @@
+[submodule "vendor/fancyqr"]
+	path = vendor/fancyqr
+	url = https://github.com/EagleoutIce/fancyqr.git
