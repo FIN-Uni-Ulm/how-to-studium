@@ -3,6 +3,8 @@ name: LaTeX Build
   push:
     branches:
     - main
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -11,8 +13,8 @@ jobs:
       image: platinshadow/latex:1.0.0
       options: --user root
     steps:
+    - uses: actions/checkout@v4
     - name: Checkout git repository
-      uses: actions/checkout@v4
       with:
         lfs: true
         submodules: true
@@ -21,9 +23,6 @@ jobs:
       run: make pdf
     - name: Commit
       run: |
-        pwd
-        ls -la
-        ls -la .git
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add -f "out/*.pdf" "out/*.png"
