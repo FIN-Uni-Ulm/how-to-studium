@@ -18,6 +18,18 @@ jobs:
         submodules: true
     - name: Build LaTeX
       run: make pdf
+    - name: Commit
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add -f "out/*.pdf" "out/*.png"
+        git commit -m "Compile LaTeX"
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        branch: gh-pages
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        force: true
 
 # jobs:
 #   build:
