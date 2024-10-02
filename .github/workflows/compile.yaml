@@ -5,7 +5,6 @@ name: LaTeX Build
     - main
 permissions:
   contents: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -30,41 +29,6 @@ jobs:
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
-        branch: gh-pages
+        branch: build
         github_token: ${{ secrets.GITHUB_TOKEN }}
         force: true
-
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     steps:
-#     - name: Checkout git repository
-#       uses: actions/checkout@v3
-#       with:
-#         lfs: true
-#         submodules: true
-#     - name: Setup Python environment for sltx
-#       uses: actions/setup-python@v2
-#       with:
-#         python-version: '3.8'
-#     - name: get pu for preview
-#       run: sudo apt install poppler-utils
-#     - name: use make docker to do the magic
-#       run: make docker
-#     - name: 'compiling the pdfs'
-#       run: |
-#         ./run-docker
-#         pdftoppm -png -f 1 -l 1 ./build/noanim_presentation.pdf preview
-#     - name: Commit
-#       run: |
-#         cp build/*.pdf ./
-#         git config --local user.email "action@github.com"
-#         git config --local user.name "GitHub Action"
-#         git add -f "./*.pdf" "preview*.png"
-#         git commit -m "Newly compiled data"
-#     - name: Push changes
-#       uses: ad-m/github-push-action@master
-#       with:
-#         branch: gh-pages
-#         github_token: ${{ secrets.GITHUB_TOKEN }}
-#         force: true
