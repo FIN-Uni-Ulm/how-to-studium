@@ -11,6 +11,7 @@
 \usepackage{listings}
 \usepackage{graphicx}
 \usepackage{tikz}
+\usepackage{fontawesome}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\annotatedFigureBoxCustom{bottom-left}{top-right}{label}{label-position}{box-color}{label-color}{border-color}{text-color}
@@ -411,9 +412,25 @@
 
 
 \section{Leben an der Uni}
-\subsection{Wie lernen?}
 \subsection{Wo lernen?}
+\begin{frame}{\insertsubsection}
+    \begin{itemize}
+        \item Lernflächen \begin{itemize} \item Überall an unserer Uni mit \textbf{LF} markiert \end{itemize}
+        \item Computerpools \begin{itemize}
+            \item Südpool
+            \item Nordpool
+            \item Smileypool \end{itemize}
+        \item Bibliothek \begin{itemize} \item Möglichkeit Räume zu reservieren \end{itemize}
+    \end{itemize}
+\end{frame}
+
 \subsection{Wo finde ich Räume?}
+\begin{frame}{\insertsubsection - Hörsaalfinder}
+    \begin{fancycolumns}
+        \fancyqr[width=\linewidth]{https://www.uni-ulm.de/einrichtungen/kiz/weiteres/campus-navigation/hoersaalfinder/}
+    \end{fancycolumns}
+\end{frame}
+
 \subsection{Wo Altklausuren?}
 \subsection{Ansprechpartner}
 \subsection{Seite von der Fachschaft}
@@ -430,13 +447,16 @@
 \section{Schlussworte}
 \begin{frame}{Ende}
     \begin{fancycolumns}[widths={30}]
-        \fancyqr[height=\linewidth]{https://github.com/by-lars/how-to-studium?tab=readme-ov-file}
-        \begin{center}
-            Source \& PDF Download
-        \end{center}
+        \fancyqr[image = \huge\faGithub, height=\linewidth]{https://github.com/by-lars/how-to-studium?tab=readme-ov-file}
         \nextcolumn
         \begin{center}
-            \LARGE{Danke für eure Aufmerksamkeit!} \newline
+            \LARGE{Danke für eure Aufmerksamkeit!}
+        \end{center}
+    \end{fancycolumns}
+    
+    \begin{fancycolumns}[widths={30}]
+        \begin{center}
+            Source \& PDF Download
         \end{center}
     \end{fancycolumns}
 \end{frame}
