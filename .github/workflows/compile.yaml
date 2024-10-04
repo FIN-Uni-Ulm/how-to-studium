@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: 
-      image: platinshadow/latex:1.0.0
+      image: platinshadow/latex:1.0.1
     steps:
     - name: Checkout git repository
       uses: actions/checkout@v4
