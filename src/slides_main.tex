@@ -1,6 +1,6 @@
 \documentclass[
 	aspectratio=169, 
-	8pt 
+	10pt 
 ]{beamer}
 \usepackage[utf8]{inputenc} 
 \usepackage[ngerman]{babel}
@@ -34,6 +34,7 @@
 \maketitle[assets/uni.png][50] % title slide with optional title picture and parameter to move it upwards
 
 \section{Willkommen}
+
 \begin{frame}{Links}
     \begin{fancycolumns}[widths={40,40}]
         \fancyqr[image = \huge\faGithub, height=\linewidth]{https://github.com/by-lars/how-to-studium}
@@ -68,6 +69,15 @@
 
 \begin{frame}{\insertsubsection}
     \includegraphics[width=\linewidth, trim={1cm 20.1cm 1cm 2.2cm}, clip]{assets/SP-BA-Inf-FSPO2022.pdf}
+\end{frame}
+
+\begin{frame}{\insertsubsection (Kategorien)}
+    \begin{itemize}
+        \item Praktische, Theoretische, Technische Informatik + Mathematik
+        \item \textbf{Seminar}, \textbf{ASQ}: Lernen von wissenschaftlicher Arbeitsweise. Seminararbeit + 2 Pflicht ASQ
+        \item \textbf{Vertiefungsbereicht}: Freie Modulwahl aus Katalog 
+        \item \textbf{Ergänzungsbereich}: Wahl aus jedem Modul der Uni (oft aus dem ASQ Bereich)
+    \end{itemize}
 \end{frame}
 
 \subsection{LP und SWS}
@@ -167,6 +177,8 @@
             10 ct = 10:15
         \end{definition}
     \end{fancycolumns}
+
+    $\longrightarrow$ Die meisten Vorlesungen fangen \textbf{ct} an!
 \end{frame}
 
 \subsection{Prüfungsanmeldung}
@@ -228,11 +240,11 @@
 \end{frame}
 
 \section{Module und Prüfungen}
-\subsection{Teile einer Veranstalung / eines Moduls}
+\subsection{Bestandteile einer Veranstalung / eines Moduls}
 \begin{frame}{\insertsubsection}
     \begin{fancycolumns}[columns=2]
         \begin{definition}{Vorlesung}
-            Dozent steht im Hörsaal und lehrt über ein Themengebiet
+            Dozent/-in steht im Hörsaal und lehrt über ein Themengebiet
         \end{definition}
         
         \begin{definition}{Übung}
@@ -265,6 +277,23 @@
 
 \end{frame}
 
+\subsection{Wie finde ich den Raum meiner Vorlesung?}
+\begin{frame}{\insertsubsection \space|\space Hörsaalfinder}
+    \begin{fancycolumns}[widths={30}]
+        \fancyqr[width=\linewidth]{https://www.uni-ulm.de/einrichtungen/kiz/weiteres/campus-navigation/hoersaalfinder/}
+        
+        \nextcolumn
+        \centering
+        \begin{minipage}[C]{0.8\textwidth}
+            \begin{itemize}
+                \item Hörsäle
+                \item PC-Pools
+                \item Drucker 
+                \item Seminarräume 
+            \end{itemize}
+        \end{minipage}
+    \end{fancycolumns}
+\end{frame}
 
 \subsection{Welche Module im ersten Semester}
 \MakeNewBox{gdti}{yellow}
@@ -397,41 +426,34 @@
 \end{frame}
 
 
-\section{Prüfungsordnungen}
-\subsection{Was diese?}
+\subsection{ASPO \& FSPO}
 \begin{frame}{\insertsubsection}
-    \begin{itemize}
-        \item \underline{\href{https://www.uni-ulm.de/fileadmin/website_uni_ulm/zuv/zuv.dezIII.abt2u3/3-2oeffentlich/bekanntmachungen/2022/FSPO_Informatikstudiengaenge.pdf}{Fachspezifische Prüfungsordnung (FSPO)}}
-        \item \underline{\href{https://www.uni-ulm.de/fileadmin/website_uni_ulm/zuv/zuv.dezIII.abt2u3/3-2oeffentlich/bekanntmachungen/2022/veroeffentlichung_asop_final.pdf}{Allgemeine Studien- und Prüfungsordnung (ASPO)}}
-        \item Ihr studiert in der FSPO2022
-        \item FSPO beinhaltet sehr wichtige Informationen zu Deadlines und wichtigen Prüfungen! 
-    \end{itemize}
-\end{frame}
-
-
-\begin{frame}
-    \begin{fancycolumns}
-        \begin{definition}{FSPO}
+    \begin{fancycolumns}[T]
+        \begin{definition}{\underline{\href{https://www.uni-ulm.de/fileadmin/website_uni_ulm/zuv/zuv.dezIII.abt2u3/3-2oeffentlich/bekanntmachungen/2022/veroeffentlichung_asop_final.pdf}{ASPO}}}
             \begin{itemize}
-                \item Fachspezifische Regeln zum Informatik, Software Engieering und Medieninformatik Studium
-                \item Welche Orientierungsprüfungen man bis wann bestehen muss
-                \item Wie viel Versuche für welche Prüfungen 
+                \item Allgemeine Regeln zum Studium und Prüfungen an der Uni
+                \item Gibt den Rahmen für die FSPO und die Uni vor
             \end{itemize}
         \end{definition}
 
         \nextcolumn
-        
-        \begin{definition}{ASPO}
+        \begin{definition}{\underline{\href{https://www.uni-ulm.de/fileadmin/website_uni_ulm/zuv/zuv.dezIII.abt2u3/3-2oeffentlich/bekanntmachungen/2022/FSPO_Informatikstudiengaenge.pdf}{FSPO}}}
             \begin{itemize}
-                \item Allgemeine Fachübergreifende Regeln zum Studium und Prüfungen an der Uni
+                \item Fachspezifische Regeln zum <Studium
+                \item Welche Orientierungsprüfungen man bis wann bestehen muss
+                \item Wie viel Versuche für welche Prüfungen 
             \end{itemize}
         \end{definition}
-            
     \end{fancycolumns}
+    
+    \begin{itemize}
+        \item[$\longrightarrow$] Es lohnt sich die FSPO zu lesen / zu kennen
+        \item[$\longrightarrow$] FSPO beinhaltet sehr wichtige Informationen zu Deadlines und wichtigen Prüfungen! \newline
+    \end{itemize}
 \end{frame}
 
 
-\section{Leben an der Uni}
+\section{Uni, Lernen, Leben}
 \subsection{Wo lernen?}
 \begin{frame}{\insertsubsection}
     \begin{itemize}
@@ -441,27 +463,152 @@
             \item Nordpool
             \item Smileypool \end{itemize}
         \item Bibliothek \begin{itemize} \item Möglichkeit Räume zu reservieren \end{itemize}
+        \item[$\rightarrow$] Es lohnt sich Lerngruppen zu finden 
     \end{itemize}
 \end{frame}
 
-\subsection{Wo finde ich Räume?}
-\begin{frame}{\insertsubsection - Hörsaalfinder}
-    \begin{fancycolumns}
-        \fancyqr[width=\linewidth]{https://www.uni-ulm.de/einrichtungen/kiz/weiteres/campus-navigation/hoersaalfinder/}
+\subsection{Wie lernen?}
+\begin{frame}{\insertsubsection}
+    \begin{itemize}
+        \item Spaced Repetition (Karteikarten) \begin{itemize}
+            \item Anki, Mochi
+            \item Sehr zu Empfehlen für Mathe (Definitionen Lernen)! 
+            \item[$\rightarrow$] Karteikarten existieren bereist (moodle Kurs) 
+        \end{itemize}
+        \item Pomodoro
+        \item Lerngruppen
+        \item Body Doubles 
+    \end{itemize}
+\end{frame}
+
+\subsection{Ansprechpersonen}
+\begin{frame}{\insertsubsection}
+    \begin{itemize}
+        \item \underline{\textbf{\href{https://www.uni-ulm.de/studium/studienberatung/zentrale-studienberatung/}{Zentrale Studienberatung}}}: Generelle Fragen, Studiumsorganisation, Unsicherheit mit dem Studiengang, Nachteilausgleich  
+        \item \underline{\textbf{\href{https://www.uni-ulm.de/studium/studienberatung/studienfachberatung/}{Studienfachberatung}}}: Spezifische Fragen zum Studiengang 
+        \item \underline{\textbf{\href{https://studierendenwerk-ulm.de/}{Studierendenwerk}}}: Wohnen, Essen, Bafög, Studieren mit Kindern, Beratung
+        \item \underline{\textbf{\href{https://studierendenwerk-ulm.de/beratung-betreuung/psychosoziale-beratung/}{Psychosozialberatung}}}: Kostenlos, persönliche Probleme, Lernschwierigkeiten, Prüfungsängste, etc
+        \item \underline{\textbf{\href{https://stuve.uni-ulm.de/fin/aktuelles}{Fachschaft}}}: {Zusammen mit der StuVe Vertreter der Studenten. }
+        \item \textbf{Professoren}: E-Mail schreiben oder nach der Vorlesung kurz fragen
+    \end{itemize}
+\end{frame}
+
+\subsection{Fachschaft Informatik (von Studierenden für Studierende)}
+\begin{frame}{\insertsubsection}
+    \begin{fancycolumns}[columns=2]
+        \begin{definition}{Anlaufsstelle}
+            \begin{itemize}
+                \item Altklausuren
+                \item Rat von Studierenden aus höheren Semestern
+            \end{itemize}
+        \end{definition}
+        
+        \begin{definition}{Engagement}
+            \begin{itemize}
+                \item Organisation von Events \begin{itemize}
+                    \item Erstsemestereinführung
+                    \item Uni Parties 
+                    \item \dots
+                \end{itemize}
+                \item Mitgestaltung der Lehre
+            \end{itemize}
+        \end{definition}
+        
+        \nextcolumn
+        \begin{definition}{Gemeinschaft}
+            \begin{itemize}
+                \item Sitzungen mit Essen
+                \item Fachschaftsinterne Events 
+                \item Zugang zum Fachschaftsbüro (BECI)
+            \end{itemize}
+        \end{definition}
+
+        \begin{definition}{Vertretung der Studierenden}
+            \begin{itemize}
+                \item Vermittlung zwischen Lehrenden und Studierenden 
+                \item Mitspracherecht im Prüfungsausschuss, der Studienekomission, etc.
+            \end{itemize}
+        \end{definition}
+
     \end{fancycolumns}
 \end{frame}
 
 \subsection{Wo Altklausuren?}
-\subsection{Ansprechpartner}
-\subsection{Seite von der Fachschaft}
+\begin{frame}{\insertsubsection}
+    \begin{fancycolumns}[widths={30}]
+        \fancyqr[width=\linewidth]{https://moodle.uni-ulm.de/course/view.php?id=53418}
+        \nextcolumn
+
+        \centering
+        \begin{minipage}[C]{0.8\textwidth}
+            \begin{itemize}
+                \item Fachschaft Informatik
+                \item[$\rightarrow$] Fachschaft Informatik Moodle Kurs 
+            \end{itemize}
+        \end{minipage}
+    \end{fancycolumns}
+\end{frame}
+
+\subsection{Probleme mit Programmieren?}
+\begin{frame}{\insertsubsection}
+    \begin{fancycolumns}[widths={30}]
+        \fancyqr[width=\linewidth]{https://moodle.uni-ulm.de/course/view.php?id=53212}
+        \nextcolumn
+
+        \centering
+        \begin{minipage}[C]{0.8\textwidth}
+            \begin{itemize}
+                \item \underline{\href{https://moodle.uni-ulm.de/course/view.php?id=53212}{Programmierstarthilfe (PSH)}}
+                \item Hybridveranstaltung
+                \item Discord und Moodle Kurs 
+                \item Haskell (Grundlagen der Praktischen Informatik)
+                \item Java (Objektorientiertes Programmieren)
+            \end{itemize}
+        \end{minipage}
+    \end{fancycolumns}
+\end{frame}
 
 
-\section{Freizeit}
-\subsection{Studibars}
-\subsection{Hochschulsport}
-\subsection{Referate}
-\subsection{Ehrenamte}
 
+\subsection{Freizeit}
+\begin{frame}{\insertsubsection}
+    \begin{fancycolumns}[T, columns=2]
+        \begin{definition}{Sport}
+            \begin{itemize}
+                \item Hochschulsport (sehr viele günste Sportkurse an der Uni)
+                \item Uni Fit (Gym)
+                \item Boulderhalle, Eislaufhalle, Donaubad
+            \end{itemize}
+        \end{definition}
+
+        \begin{definition}{Uni}
+            \begin{itemize}
+                \item Uni Parties
+                \item Referate (z.B. Lan-Party)
+                \item Musisches Zentrum: Orchester, Chor
+            \end{itemize}
+        \end{definition}
+        
+        \nextcolumn
+        \begin{definition}{Soziales}
+            \begin{itemize}
+                \item Studibars (quasi an jedem Wohnheim), normale Bars
+                \item Roxy
+                \item Events (z.B. Nabada, Lichterserenade) 
+            \end{itemize}
+        \end{definition}
+
+        \begin{definition}{Kultur}
+            \begin{itemize}
+                \item Musen, Theater, Kinos
+                \item Viele Museen kostenlos als Studi
+                \item Theater vergünstigt, teilweise kostenlos
+            \end{itemize}
+        \end{definition}
+
+    \end{fancycolumns}
+    \dots und vieles mehr!
+\end{frame}
 
 
 \section{Schlussworte}
