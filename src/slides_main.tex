@@ -7,6 +7,7 @@
 
 \usepackage{fancybeamer} 
 \usepackage{../vendor/fancyqr/fancyqr}
+\usepackage{../vendor/tikzpingus/tex/tikzpingus}
 
 \usepackage{listings}
 \usepackage{graphicx}
@@ -27,9 +28,11 @@
     \node[anchor=south west,inner sep=0] (image) at (0,0) { #1};\begin{scope}[x={(image.south east)},y={(image.north west)}]}{\end{scope}\end{tikzpicture}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\pgfdeclarelayer{background}\pgfdeclarelayer{foreground}\pgfdeclarelayer{middle}
+\pgfdeclarelayer{very-background}
+\pgfsetlayers{very-background,background,main,middle,foreground}
 
 \title{How-To-Studium} % short title is used for the slide footer but optional
-%\subtitle{Epic Gamer Guide To Studium} % subtitles are optional at all
 \author{Lars Pfrenger} % short author title is used for the slide footer but optional
 \date{07. Oktober 2024} 
 
@@ -37,7 +40,13 @@
 
 \maketitle[assets/uni.png][50] % title slide with optional title picture and parameter to move it upwards
 
-\section{Willkommen}
+\begin{frame}{Willkommen}
+    \centering
+    \begin{tikzpicture}
+        \pingu[graduate,eyes wink, wings wave,graduate tassel]
+     \end{tikzpicture}%
+
+\end{frame}
 
 \begin{frame}{Links}
     \begin{fancycolumns}[widths={40,40}]

@@ -15,4 +15,4 @@ _Folien für den How-To-Studium Vortrag der Informatik ESE 2024 der Uni Ulm._
 - Vor dem Klonen muss ``git lfs`` installiert sein. Zusätzlich sollte mit ``--recurse-submodules`` geklont werden. 
 
 ## Danksagungen
-- Danke an [@EagleoutIce](https://github.com/EagleoutIce) für fancyqr und fancybeamer 
+- Danke an [@EagleoutIce](https://github.com/EagleoutIce) für fancyqr, tikzpingus, fancybeamer und das schnelle Beantworten meiner LaTeX Fragen :) 
