@@ -1,3 +1,6 @@
 [submodule "vendor/fancyqr"]
 	path = vendor/fancyqr
 	url = https://github.com/EagleoutIce/fancyqr.git
+[submodule "vendor/tikzpingus"]
+	path = vendor/tikzpingus
+	url = https://github.com/EagleoutIce/tikzpingus.git
