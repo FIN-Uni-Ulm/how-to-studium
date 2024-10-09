@@ -180,7 +180,7 @@
 
 
 \def\historybox#1#2#3#4{node[history@box,below #1] (@) {\textbf{#2}: #3\ifx!#4!\else\\\footnotesize\itshape#4\par\fi}}
-\begin{frame}[c,plain]{\insertsubsection}
+\begin{frame}[c]{\insertsubsection}
   \tikzset{history-line/.style={line width=1.85mm,gray!30!white,line cap=round,rounded corners=2pt},history-event dead/.style={history-event, red}, history-line done/.style={history-line, green}, history-line extra/.style={history-line, blue}, history-line skip/.style={history-line, line width=.75mm,loosely dotted},history-event/.style={history-line,gray,line width=1mm,{Circle[length=1.85mm]}-,shorten <= -1.85mm/2},history@box/.style={yshift=.675\baselineskip,black,text width=5.75cm,font=\small},fakeimg/.style={draw=darkgray,thick,inner sep=0pt}}
   \begin{tikzpicture}
     % \draw[history-line] (0,0)--++(1,0) coordinate (@) ++(1,0) -- ++(1,0) coordinate (@2) ++(1.9,0) -- ++(1,0) coordinate (@3) ++(1,0) -- ++(5,0) coordinate (@4);
@@ -199,7 +199,6 @@
         \draw[history-line extra] (6\linewidth/9,0) -- (9\linewidth/9,0);
     }
 
-
     \foreach \x in {1,...,4}
     {
         \draw[history-event]({(\x-1) * \linewidth / 9},0.0) -- ({(\x-1) * \linewidth / 9},-0.5);
@@ -207,27 +206,26 @@
     }
 
 
-    \pause
-    \draw[history-event dead] (2.5 * \linewidth / 9, 0.0) -- (2.5 * \linewidth / 9, -1.4)
-    node[midway,below,yshift=-20pt] {\color{black}Ende der 2. Prüfungsphase des 3. Semesters}
-    node[midway,below,yshift=-30pt] {3/4 Prüfungen};
-
-
-    \pause
-    \draw[history-event dead] (3.5 * \linewidth / 9, 0.0) -- (3.5 * \linewidth / 9, 0.8)
-    node[midway,above,yshift=+12pt] {\color{black}Ende der 2. Prüfungsphase des 4. Semesters}
-    node[midway,above,yshift=+22pt] {4/4 Prüfungen};
-
-    \pause
-
-    \foreach \x in {5,...,10}
-    {
-        \draw[history-event]({(\x-1) * \linewidth / 9},0.0) -- ({(\x-1) * \linewidth / 9},-0.5);
-        \node[below] at ({(\x-1) * \linewidth / 9},-0.6) {\x};
+    \onslide<2->{
+        \draw[history-event dead] (2.5 * \linewidth / 9, 0.0) -- (2.5 * \linewidth / 9, -1.4)
+        node[midway,below,yshift=-20pt] {\color{black}Ende der 2. Prüfungsphase des 3. Semesters}
+        node[midway,below,yshift=-30pt] {3/4 Prüfungen};
     }
 
-
-    \end{tikzpicture}
+    \onslide<3->{
+        \draw[history-event dead] (3.5 * \linewidth / 9, 0.0) -- (3.5 * \linewidth / 9, 0.8)
+        node[midway,above,yshift=+12pt] {\color{black}Ende der 2. Prüfungsphase des 4. Semesters}
+        node[midway,above,yshift=+22pt] {4/4 Prüfungen};
+    }
+    
+    \onslide<4->{
+        \foreach \x in {5,...,10}
+        {
+            \draw[history-event]({(\x-1) * \linewidth / 9},0.0) -- ({(\x-1) * \linewidth / 9},-0.5);
+            \node[below] at ({(\x-1) * \linewidth / 9},-0.6) {\x};
+        }
+    }
+\end{tikzpicture}
 \end{frame}
 
 \subsection{Orientierungsprüfungen (Informatik / Software Engineering)}
