@@ -10,6 +10,11 @@ _Folien für den How-To-Studium Vortrag der Informatik ESE 2024 der Uni Ulm._
 
 </div>
 
+## Weitere Links
+- [Wikibooks Analysis 1](https://de.wikibooks.org/wiki/Mathe_f%C3%BCr_Nicht-Freaks:_Analysis_1) und das dazugehörige [Skript](https://upload.wikimedia.org/wikipedia/commons/4/42/Analysis_Eins.pdf?download)
+- [Übersichtsseite der Uni](https://www.uni-ulm.de/in/fakultaet/studium/fachbereich-informatik/fuer-studierende)
+- [Fachschaft Informatik](https://stuve.uni-ulm.de/fin/aktuelles)
+
 ## Mitwirken
 - Bei Feedback oder Fragen gerne ein neues Issue erstellen. 
 - Vor dem Klonen muss ``git lfs`` installiert sein. Zusätzlich sollte mit ``--recurse-submodules`` geklont werden. 
