@@ -17,6 +17,7 @@
 \usetikzlibrary{shapes.geometric}
 \usetikzlibrary{backgrounds,arrows.meta}
 \usepackage{fontawesome}
+\usepackage[normalem]{ulem}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\annotatedFigureBoxCustom{bottom-left}{top-right}{label}{label-position}{box-color}{label-color}{border-color}{text-color}
@@ -297,7 +298,7 @@
             \item Mathematik für Informatik I
             \item Mathematik für Informatik II
             \item Angewandte Stochastik
-            \item \underline{Grundlagen der Technischen Informatik}
+            \item Grundlagen der Technischen Informatik
             \item Objektorientierte Programmierung \end{itemize}
         \item \textbf{Sonstige Prüfungen}: Insgesamt 3 Versuche
     \end{itemize}
@@ -322,7 +323,7 @@
 
 \subsection{Stundenplan}
 \begin{frame}{\insertsubsection}
-    \begin{fancycolumns}[widths={30}]
+    \begin{fancycolumns}[widths={30}] %TODO: Aktuellen Stundenplan einfügen wenn verfügbar (https://www.uni-ulm.de/in/fakultaet/studium/fachbereich-informatik/fuer-studierende/b-sc-informatik/)
         \fancyqr[height=\linewidth]{https://www.uni-ulm.de/fileadmin/website_uni_ulm/iui2/dokumente/Stundenplaene/Stundenplaene-2024-SoSe/2024-WiSe-Stundenplaene_FSPO2022.pdf}
         \nextcolumn
         \includegraphics[width=\linewidth, trim={1cm 7.4cm 1cm 2cm}, clip, page=1]{assets/2024-WiSe-Stundenplaene_FSPO2022.pdf}
@@ -341,7 +342,7 @@
     \end{itemize}
 \end{frame}
 
-\subsection{LSF}
+\subsection{LSF} %Lehre-Studium-Forschung
 \begin{frame}{\insertsubsection \space|\space\underline{\href{https://campusonline.uni-ulm.de}{campusonline.uni-ulm.de}}}
     \begin{itemize}
         \item Prüfungsanmeldung
@@ -351,7 +352,7 @@
     \end{itemize}
 \end{frame}
 
-\subsection{Wo / Wann finden Module statt?}
+\subsection{Wo / Wann finden Module statt?} %TODO: Bilder von Aktuellem Semester
 \begin{frame}{\insertsubsection \space|\space\underline{\href{https://campusonline.uni-ulm.de}{campusonline.uni-ulm.de}}}
     \begin{annotatedFigure}
         {\includegraphics[clip, trim={0 0 0 0}, width=\linewidth]{assets/lsf-1.png}}
@@ -405,7 +406,7 @@
     \end{fancycolumns}
 \end{frame}
 
-\subsection{Moodle}
+\subsection{Moodle} %TODO: Auch hier Bild vom Aktuellen Semester einfügen
 \begin{frame}{\insertsubsection \space|\space\underline{\href{https://moodle.uni-ulm.de}{moodle.uni-ulm.de}}}
     \begin{itemize}
         \item Alle wichtigen Kursinformationen 
@@ -456,6 +457,8 @@
 
 % TODO: Meldet euch auf SOGO an und schreibt eine Mail an benjamin.chladni@uni-ulm.de
 
+%TODO: Campus4.uni-ulm.de Einfügen für Semesterbeiträge und alles andere was da noch drin ist, kein plan xD
+
 \section{Prüfungen}
 \subsection{Wann finden Prüfungen statt?}
 \begin{frame}{\insertsubsection}
@@ -470,7 +473,7 @@
 \end{frame}
 
 
-\subsection{Prüfungsplanungssystem}
+\subsection{Prüfungsplanungssystem} %TODO: Aktuelle Bilder
 \begin{frame}{\insertsubsection \space|\space \underline{\href{https://pps.informatik.uni-ulm.de/index.php}{pps.informatik.uni-ulm.de}}}
     \includegraphics[clip, trim={0 14cm 0 0}, width=\linewidth]{assets/pps.png}
 \end{frame}
@@ -485,7 +488,7 @@
     \end{itemize}
 \end{frame}
 
-\subsection{Prüfungs- an/abmeldung}
+\subsection{Prüfungs- an/abmeldung} %TODO: Bild aktuelles semester
 \begin{frame}{\insertsubsection \space|\space\underline{\href{https://campusonline.uni-ulm.de}{campusonline.uni-ulm.de}}}
     \begin{annotatedFigure}
         {\includegraphics[clip, trim={0 0 0 0}, width=\linewidth]{assets/exam.png}}
@@ -535,7 +538,7 @@
         \item Lernflächen \begin{itemize} \item Überall an unserer Uni mit \textbf{LF} markiert \end{itemize}
         \item Computerpools \begin{itemize}
             \item Südpool
-            \item Nordpool
+            \item \sout{Nordpool} (R.I.P)
             \item Smileypool \end{itemize}
         \item Bibliothek \begin{itemize} \item Möglichkeit Räume zu reservieren \end{itemize}
         \item[$\rightarrow$] Es lohnt sich Lerngruppen zu finden 
@@ -553,6 +556,9 @@
         \item Pomodoro
         \item Lerngruppen
         \item Body Doubles 
+        \item \textbf{Altklausuren} \begin{itemize}
+            \item Vor allem in Mathe sehr Wichtig
+        \end{itemize}
     \end{itemize}
 \end{frame}
 
@@ -563,7 +569,7 @@
         \item \underline{\textbf{\href{https://www.uni-ulm.de/studium/studienberatung/studienfachberatung/}{Studienfachberatung}}}: Spezifische Fragen zum Studiengang 
         \item \underline{\textbf{\href{https://studierendenwerk-ulm.de/}{Studierendenwerk}}}: Wohnen, Essen, Bafög, Studieren mit Kindern, Beratung
         \item \underline{\textbf{\href{https://studierendenwerk-ulm.de/beratung-betreuung/psychosoziale-beratung/}{Psychosozialberatung}}}: Kostenlos, persönliche Probleme, Lernschwierigkeiten, Prüfungsängste, etc
-        \item \underline{\textbf{\href{https://stuve.uni-ulm.de/fin/aktuelles}{Fachschaft}}}: {Zusammen mit der StuVe Vertretung der Studierenden. }
+        \item \underline{\textbf{\href{https://stuve.de/fin/aktuelles}{Fachschaft}}}: {Zusammen mit der StuVe Vertretung der Studierenden. }
         \item \textbf{Professoren}: E-Mail schreiben oder nach der Vorlesung kurz fragen
     \end{itemize}
 \end{frame}
@@ -632,7 +638,7 @@
     \end{fancycolumns}
 \end{frame}
 
-\subsection{Probleme mit Programmieren?}
+\subsection{Probleme mit Programmieren?} %TODO: Aktuellen Moodle Kurs raussuchen und schauen ob das überhaupt noch funktioniert
 \begin{frame}{\insertsubsection}
     \begin{fancycolumns}[widths={30}]
         \fancyqr[width=\linewidth]{https://moodle.uni-ulm.de/course/view.php?id=53212}
